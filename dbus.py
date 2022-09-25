@@ -201,71 +201,52 @@ class DBus:
         m.body = (name, )
         return self.call(m)
 
-    def list_names():
+    def list_names(self) -> list:
         m = DBusMessage(**ORG_FREEDESKTOP_DBUS,
                         interface='org.freedesktop.DBus',
                         member='ListNames')
-        return self.call(m)
+        return self.call(m).body[0]
 
-    def list_activatable_names():
+    def list_activatable_names(self) -> list:
         m = DBusMessage(**ORG_FREEDESKTOP_DBUS,
                         interface='org.freedesktop.DBus',
                         member='ListActivatableNames')
-        return self.call(m)
+        return self.call(m).body[0]
 
     def name_has_owner(name:str):
-        m = DBusMessage(**ADDRESS, member='ListActivatableNames',
-                                   signature='s')
-        m.body = (name, )
-        return m
+        raise NotImplementedError
 
     def start_service_by_name(name:str, flags:int=0):
-        m = DBusMessage(**ADDRESS, member='StartServiceByName',
-                                   signature='su')
-        m.body = (name, flags)
-        return m
+        # StartServiceByName | su (name, flags)
+        raise NotImplementedError
 
     def update_activation_environment(self, **environment):
-        m = DBusMessage(**ADDRESS, member='UpdateActivationEnvironment',
-                                   signature='a{ss}')
-        m.body = (environment, )
-        return m
+        # UpdateActivationEnvironment | a{ss} (environment, )
+        raise NotImplementedError
 
     def get_name_owner(self, bus_name:str):
-        m = DBusMessage(**ADDRESS, member='GetNameOwner',
-                                   signature='s')
-        m.body = (name, )
-        return m
+        # GetNameOwner | s (name, )
+        raise NotImplementedError
 
     def get_connection_unix_user(self, bus_name:str):
-        m = DBusMessage(**ADDRESS, member='GetConnectionUnixUser',
-                                   signature='s')
-        m.body = (bus_name, )
-        return m
+        # GetConnectionUnixUser | s (bus_name, )
+        raise NotImplementedError
 
     def get_connection_unix_process_id(self, bus_name:str):
-        m = DBusMessage(**ADDRESS, member='GetConnectionUnixProcessID',
-                                   signature='s')
-        m.body = (bus_name, )
-        return m
+        # GetConnectionUnixProcessID | s (bus_name, )
+        raise NotImplementedError
 
     def get_connection_credentials(self, bus_name:str):
-        m = DBusMessage(**ADDRESS, member='GetConnectionCredentials',
-                                   signature='s')
-        m.body = (bus_name, )
-        return m
+        # GetConnectionCredentials | s (bus_name, )
+        raise NotImplementedError
 
     def get_adt_audit_session_data(self, bus_name:str):
-        m = DBusMessage(**ADDRESS, member='GetAdtAuditSessionData',
-                                   signature='s')
-        m.body = (bus_name, )
-        return m
+        # GetAdtAuditSessionData | s (bus_name, )
+        raise NotImplementedError
 
     def get_connection_selinux_security_context(self, bus_name:str):
-        m = DBusMessage(**ADDRESS, member='GetAdtAuditSessionData',
-                                   signature='s')
-        m.body = (bus_name, )
-        return m
+        # GetAdtAuditSessionData | s (bus_name, )
+        raise NotImplementedError
 
     def add_match(self, **rules) -> bool:
         rule = ','.join('{}={}'.format(k, v) for k, v in rules.items())
@@ -283,7 +264,7 @@ class DBus:
         m.body = (rule, )
         return self.call(m).type == 2
 
-    def get_id() -> str:
+    def get_id(self) -> str:
         m = DBusMessage(**ORG_FREEDESKTOP_DBUS,
                         interface='org.freedesktop.DBus.Properties',
                         member='GetId')
