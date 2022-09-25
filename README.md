@@ -1,2 +1,2 @@
-# python-udbus
-minimal python dbus implementation
+# µDbus
+microDBUS implementation for/in Python
